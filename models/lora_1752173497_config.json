@@ -1,0 +1,7 @@
+{
+  "method": "lora",
+  "base_model": "gpt-3.5-turbo",
+  "lora_r": 16,
+  "lora_alpha": 32,
+  "lora_dropout": 0.1
+}

@@ -29,3 +29,48 @@ pandas>=2.0.0
 # Phase 3: Advanced Security
 bcrypt>=4.0.0
 pyjwt>=2.8.0
+
+# Phase 4: Advanced AI Models
+anthropic>=0.7.0
+langchain>=0.0.300
+langchain-openai>=0.0.2
+accelerate>=0.20.0
+bitsandbytes>=0.41.0
+peft>=0.4.0
+trl>=0.7.0
+
+# Phase 4: Enhanced Smart Home
+zigbee2mqtt>=0.1.0
+zwave-js>=0.1.0
+matter-python>=0.1.0
+homeassistant-api>=0.1.0
+philips-hue>=0.1.0
+nest-api>=0.1.0
+
+# Phase 4: Multi-User Collaboration
+fastapi>=0.100.0
+websockets>=11.0.0
+redis>=4.5.0
+celery>=5.3.0
+sqlalchemy>=2.0.0
+alembic>=1.11.0
+
+# Phase 4: Advanced Security
+face-recognition>=1.3.0
+opencv-python>=4.8.0
+pyfingerprint>=0.1.0
+quantum-resistant>=0.1.0
+threat-intelligence>=0.1.0
+security-scanner>=0.1.0
+
+# Phase 4: Real-time Features
+socketio>=5.8.0
+asyncio-mqtt>=0.11.0
+aiohttp>=3.8.0
+uvloop>=0.17.0
+
+# Phase 4: Advanced Monitoring
+prometheus-client>=0.17.0
+grafana-api>=0.1.0
+elasticsearch>=8.0.0
+kibana>=0.1.0
