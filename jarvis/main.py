@@ -17,6 +17,7 @@ from jarvis.modules.plugin_manager import PluginManager
 from jarvis.modules.cloud_local import LocalCloudStorage
 from jarvis.modules.ai_model_openai import OpenAIInterface
 from jarvis.modules.smart_home_hub import SmartHomeHub
+from jarvis.emotional_intelligence.emotional_coordinator import EmotionalIntelligenceCoordinator
 
 USER_ID = 'default_user'  # For Phase 3, single user
 
@@ -37,6 +38,9 @@ class JARVISPhase3:
         # Phase 3: New modules
         self.ai_model = OpenAIInterface()
         self.smart_home = SmartHomeHub()
+        
+        # Phase 4: Emotional Intelligence
+        self.emotional_coordinator = EmotionalIntelligenceCoordinator()
         
         # Initialize Phase 3 features
         self._initialize_phase3()
@@ -70,6 +74,10 @@ class JARVISPhase3:
         else:
             self.interaction.send_message("⚠️ Smart home hub not available")
 
+        # Initialize emotional intelligence
+        self.interaction.send_message("🧠 Emotional intelligence system initialized")
+        self.interaction.send_message("💙 Advanced memory architecture and personality adaptation active")
+
         # Set up voice callback
         self.voice.set_voice_callback(self._handle_voice_input)
 
@@ -78,11 +86,15 @@ class JARVISPhase3:
         self.interaction.send_message(f"[Voice] Heard: {text}")
         self._process_input(text)
 
-    def _process_input(self, user_input: str):
+    async def _process_input(self, user_input: str):
         """Process user input with Phase 3 enhancements."""
+        # Phase 4: Emotional intelligence processing
+        emotional_result = await self.emotional_coordinator.process_interaction(user_input)
+        
         # Store user input in context
         context = self.context_engine.retrieve_context(USER_ID)
         context['last_input'] = user_input
+        context['emotional_context'] = emotional_result['emotional_context']
         self.context_engine.store_context(USER_ID, context)
 
         # Phase 3: AI-powered intent extraction
@@ -139,14 +151,34 @@ class JARVISPhase3:
             self._handle_ai_command(user_input)
             return
 
-        # Respond to user
-        final_response = response
+        # Phase 4: Emotional intelligence commands
+        if user_input.startswith('/emotional'):
+            self._handle_emotional_command(user_input)
+            return
+
+        # Phase 4: Apply emotional intelligence to response
+        emotional_context = emotional_result['emotional_context']
+        communication_style = emotional_result['communication_style']
+        response_template = emotional_result['response_template']
+        
+        # Adapt response based on emotional context
+        if emotional_context['emotion'] != 'neutral':
+            final_response = f"{response_template}\n\n{response}"
+        else:
+            final_response = response
         
         # Add anticipations if available
         if anticipations:
             final_response += "\n\n💡 Suggestions:\n"
             for anticipation in anticipations:
                 final_response += f"• {anticipation}\n"
+
+        # Add emotional rapport indicator
+        rapport_score = emotional_result['rapport_score']
+        if rapport_score > 0.8:
+            final_response += f"\n💙 Emotional rapport: Excellent ({rapport_score:.2f})"
+        elif rapport_score > 0.6:
+            final_response += f"\n💙 Emotional rapport: Good ({rapport_score:.2f})"
 
         self.interaction.send_message(final_response)
 
@@ -335,11 +367,67 @@ class JARVISPhase3:
             response = f"📝 Summary:\n{summary}"
             self.interaction.send_message(response)
 
-    def run(self):
+    async def _handle_emotional_command(self, command: str):
+        """Handle emotional intelligence commands."""
+        parts = command.split()
+        if len(parts) < 2:
+            self.interaction.send_message("Usage: /emotional <insights|memory|personality|learning|rapport> [parameters]")
+            return
+
+        action = parts[1]
+        
+        if action == 'insights':
+            insights = await self.emotional_coordinator.get_emotional_insights()
+            response = f"🧠 Emotional Intelligence Insights:\n"
+            response += f"Dominant emotion: {insights['emotional_patterns']['dominant_emotion']}\n"
+            response += f"Average intensity: {insights['emotional_patterns']['average_intensity']:.2f}\n"
+            response += f"Rapport score: {insights['rapport_metrics']['current_score']:.2f}\n"
+            response += f"Adaptation success rate: {insights['learning_metrics']['adaptation_success_rate']:.2f}\n"
+            response += f"Total memories: {insights['memory_insights']['total_memories']}"
+            self.interaction.send_message(response)
+
+        elif action == 'memory':
+            memory_data = self.emotional_coordinator.emotional_memory.export_memory_data()
+            response = f"💾 Emotional Memory Status:\n"
+            response += f"Total memories: {memory_data['total_memories']}\n"
+            response += f"Memory types: {len(memory_data['memory_types'])}\n"
+            response += f"Learning moments: {memory_data['learning_moments']}\n"
+            response += f"Patterns identified: {len(memory_data['patterns'])}"
+            self.interaction.send_message(response)
+
+        elif action == 'personality':
+            personality_data = self.emotional_coordinator.personality_engine.export_personality_data()
+            response = f"🎭 Personality Profile:\n"
+            response += f"Communication style: {personality_data['personality_summary']['communication_style']}\n"
+            response += f"Adaptation history: {personality_data['adaptation_history']}\n"
+            response += f"Learning moments: {personality_data['learning_moments']}\n"
+            response += f"Adaptation suggestions: {len(personality_data['emotional_adaptation_suggestions'])}"
+            self.interaction.send_message(response)
+
+        elif action == 'learning':
+            learning_report = await self.emotional_coordinator.get_continuous_learning_report()
+            response = f"📚 Continuous Learning Report:\n"
+            response += f"Learning sessions: {learning_report['total_learning_sessions']}\n"
+            response += f"Success rate: {learning_report['success_rate']:.2f}\n"
+            response += f"Positive outcomes: {learning_report['positive_learning_outcomes']}\n"
+            response += f"Negative outcomes: {learning_report['negative_learning_outcomes']}"
+            self.interaction.send_message(response)
+
+        elif action == 'rapport':
+            rapport_metrics = self.emotional_coordinator.rapport_metrics
+            response = f"💙 Rapport Metrics:\n"
+            response += f"Current score: {rapport_metrics.get('current_score', 0):.2f}\n"
+            response += f"Emotional alignment: {rapport_metrics.get('emotional_alignment', 0):.2f}\n"
+            response += f"Memory relevance: {rapport_metrics.get('memory_relevance', 0):.2f}\n"
+            response += f"Learning engagement: {rapport_metrics.get('learning_engagement', 0):.2f}\n"
+            response += f"Total interactions: {rapport_metrics.get('total_interactions', 0)}"
+            self.interaction.send_message(response)
+
+    async def run(self):
         """Main application loop."""
-        self.interaction.send_message("🚀 Welcome to JARVIS AI Assistant (Phase 3)")
-        self.interaction.send_message("New features: Real voice, AI models, smart home, enhanced research")
-        self.interaction.send_message("Commands: /plugin, /sync, /home, /ai, 'exit' to quit")
+        self.interaction.send_message("🚀 Welcome to JARVIS AI Assistant (Phase 4)")
+        self.interaction.send_message("New features: Real voice, AI models, smart home, emotional intelligence")
+        self.interaction.send_message("Commands: /plugin, /sync, /home, /ai, /emotional, 'exit' to quit")
         
         while True:
             user_input = self.interaction.get_user_input()
@@ -347,8 +435,9 @@ class JARVISPhase3:
                 self.interaction.send_message("Goodbye!")
                 break
             
-            self._process_input(user_input)
+            await self._process_input(user_input)
 
 if __name__ == "__main__":
+    import asyncio
     jarvis = JARVISPhase3()
-    jarvis.run()
+    asyncio.run(jarvis.run())

@@ -1,24 +1,55 @@
 """
-Emotional Intelligence Package for JARVIS Phase 4
+Emotional Intelligence Package for JARVIS
 
-This package provides emotional intelligence capabilities including:
-- Emotional state detection
-- Personalized responses
-- Mood-based automation
-- Emotional memory
-- Empathetic interactions
+Provides advanced emotional intelligence capabilities including:
+- Advanced memory architecture
+- Personality adaptation
+- Continuous learning
+- Emotional analysis
+- Rapport building
 """
 
-from .emotion_detector import EmotionDetector
-from .personality_engine import PersonalityEngine
-from .mood_analyzer import MoodAnalyzer
-from .rapport_builder import RapportBuilder
-from .emotional_memory import EmotionalMemory
+from .emotional_memory import (
+    AdvancedEmotionalMemory,
+    EmotionalState,
+    EmotionalContext,
+    MemoryType,
+    MemoryEntry,
+    MemoryPattern
+)
+
+from .personality_engine import (
+    PersonalityEngine,
+    CommunicationStyle,
+    PersonalityTrait,
+    PersonalityProfile,
+    EmotionalResponse
+)
+
+from .emotional_coordinator import (
+    EmotionalIntelligenceCoordinator,
+    EmotionalAnalysis,
+    InteractionContext
+)
 
 __all__ = [
-    'EmotionDetector',
-    'PersonalityEngine', 
-    'MoodAnalyzer',
-    'RapportBuilder',
-    'EmotionalMemory'
+    # Memory system
+    'AdvancedEmotionalMemory',
+    'EmotionalState',
+    'EmotionalContext',
+    'MemoryType',
+    'MemoryEntry',
+    'MemoryPattern',
+    
+    # Personality system
+    'PersonalityEngine',
+    'CommunicationStyle',
+    'PersonalityTrait',
+    'PersonalityProfile',
+    'EmotionalResponse',
+    
+    # Coordinator
+    'EmotionalIntelligenceCoordinator',
+    'EmotionalAnalysis',
+    'InteractionContext'
 ]
