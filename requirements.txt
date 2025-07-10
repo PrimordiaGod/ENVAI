@@ -1,3 +1,31 @@
-rich
-requests
-cryptography
+# Core dependencies
+rich>=13.0.0
+requests>=2.31.0
+cryptography>=41.0.0
+
+# Phase 3: Voice Processing
+SpeechRecognition>=3.10.0
+pyttsx3>=2.90
+pyaudio>=0.2.11
+sounddevice>=0.4.6
+whisper>=1.0.0
+
+# Phase 3: AI Models
+openai>=1.0.0
+transformers>=4.30.0
+torch>=2.0.0
+sentence_transformers>=2.2.0
+numpy>=1.24.0
+
+# Phase 3: Smart Home & IoT
+paho-mqtt>=1.6.1
+websockets>=11.0.0
+requests-oauthlib>=1.3.0
+
+# Phase 3: Machine Learning
+scikit-learn>=1.3.0
+pandas>=2.0.0
+
+# Phase 3: Advanced Security
+bcrypt>=4.0.0
+pyjwt>=2.8.0

@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from typing import Optional, Callable
+from typing import Optional, Callable, Dict, List
 
 class VoiceInterface(ABC):
     @abstractmethod
@@ -45,4 +45,45 @@ class VoiceInterface(ABC):
     @abstractmethod
     def stop_continuous_listening(self) -> bool:
         """Stop continuous listening mode."""
+        pass
+
+    # Phase 3: Enhanced Voice Features
+    @abstractmethod
+    def detect_wake_word(self, audio_data: bytes) -> bool:
+        """Detect if wake word was spoken in audio data."""
+        pass
+
+    @abstractmethod
+    def process_voice_command(self, command: str) -> Dict[str, any]:
+        """Process voice commands and return structured data."""
+        pass
+
+    @abstractmethod
+    def get_available_voices(self) -> List[Dict[str, str]]:
+        """Get list of available voice options."""
+        pass
+
+    @abstractmethod
+    def set_voice(self, voice_id: str) -> bool:
+        """Set specific voice for text-to-speech."""
+        pass
+
+    @abstractmethod
+    def get_voice_status(self) -> Dict[str, any]:
+        """Get current voice interface status."""
+        pass
+
+    @abstractmethod
+    def calibrate_microphone(self) -> Dict[str, any]:
+        """Calibrate microphone for optimal performance."""
+        pass
+
+    @abstractmethod
+    def start_voice_session(self) -> bool:
+        """Start a voice interaction session."""
+        pass
+
+    @abstractmethod
+    def end_voice_session(self) -> bool:
+        """End the current voice interaction session."""
         pass
