@@ -3,6 +3,10 @@ JARVIS Next-Gen AI Personal Assistant
 Main entry point for Phase 1 prototype.
 """
 
+import sys
+import os
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 from jarvis.modules.interaction_cli import CLIInteraction
 from jarvis.modules.context_memory import MemoryContextEngine
 from jarvis.modules.research_web import WebResearch
