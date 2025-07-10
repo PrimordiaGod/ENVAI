@@ -280,8 +280,18 @@ Each should be a different perspective or strategy.
         lines = response.content.split('\n')
         for line in lines:
             line = line.strip()
-            if line and any(indicator in line.lower() for indicator in ['approach', 'thought', 'strategy', 'perspective']):
+            if line and len(line) > 10:  # Any substantial line
                 thoughts.append(line)
+        
+        # If no thoughts were parsed, create fallback thoughts
+        if not thoughts:
+            thoughts = [
+                f"Approach 1: Analyze the problem systematically",
+                f"Approach 2: Consider different perspectives",
+                f"Approach 3: Break down into smaller components",
+                f"Approach 4: Look for patterns and similarities",
+                f"Approach 5: Evaluate pros and cons"
+            ]
         
         return thoughts[:self.max_branches]
     
@@ -388,6 +398,14 @@ Based on this current thought, generate 2-3 next logical steps or considerations
             line = line.strip()
             if line and len(line) > 10:
                 thoughts.append(line)
+        
+        # If no thoughts were parsed, create fallback thoughts
+        if not thoughts:
+            thoughts = [
+                f"Consider the implications of: {current_thought}",
+                f"Explore alternative viewpoints",
+                f"Evaluate the evidence and reasoning"
+            ]
         
         return thoughts[:3]
     
