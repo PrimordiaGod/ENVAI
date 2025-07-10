@@ -271,7 +271,7 @@ Each should be a different perspective or strategy.
         
         response = await self.model_manager.generate_response(
             prompt,
-            task_type=self.model_manager.TaskType.REASONING,
+            task_type=TaskType.REASONING,
             context=context
         )
         
@@ -377,7 +377,7 @@ Based on this current thought, generate 2-3 next logical steps or considerations
         
         response = await self.model_manager.generate_response(
             prompt,
-            task_type=self.model_manager.TaskType.REASONING,
+            task_type=TaskType.REASONING,
             context=context
         )
         
