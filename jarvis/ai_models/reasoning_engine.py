@@ -98,9 +98,10 @@ class ChainOfThoughtReasoning(BaseReasoningPattern):
         reasoning_prompt = self._create_reasoning_prompt(question, context)
         
         # Get response from model
+        from .model_manager import TaskType
         response = await self.model_manager.generate_response(
             reasoning_prompt,
-            task_type=self.model_manager.TaskType.REASONING,
+            task_type=TaskType.REASONING,
             context=context
         )
         
